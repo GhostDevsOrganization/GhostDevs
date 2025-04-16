@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Ghost Devs | Blockchain Solutions</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Rajdhani', 'Courier New', monospace;
+    }
+    
+    :root {
+      --dark-bg: #050505;
+      --dark-accent: #111111;
+      --primary-text: #e6e6e6;
+      --accent-cyan: #00e6e6;
+      --accent-blue: #0088ff;
+      --ghost-glow: 0 0 15px rgba(0, 230, 230, 0.5);
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      background-color: var(--dark-bg);
+      color: var(--primary-text);
+      overflow-x: hidden;
+    }
+    
+    /* Improved checkered background */
+    .circuit-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(to right, var(--dark-accent) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--dark-accent) 1px, transparent 1px);
+      background-size: 40px 40px;
+      background-position: center center;
+      opacity: 0.15;
+      z-index: -1;
+    }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 5%;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(5, 5, 5, 0.8);
+      backdrop-filter: blur(10px);
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      position: relative;
+    }
+    
+    .logo img {
+      height: 50px;
+      filter: drop-shadow(var(--ghost-glow));
+    }
+    
+    .logo h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    
+    /* Animated blocks */
+    .logo-blocks {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+    
+    .logo-block {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border: 1px solid #fff;
+      opacity: 0.8;
+    }
+    
+    .block-1 { top: 0; left: 0; animation: float-block 3s ease-in-out infinite; }
+    .block-2 { top: 0; left: 16px; animation: float-block 3s ease-in-out infinite 0.2s; }
+    .block-3 { top: 0; left: 32px; animation: float-block 3s ease-in-out infinite 0.4s; }
+    .block-4 { top: 16px; left: 0; animation: float-block 3s ease-in-out infinite 0.6s; }
+    .block-5 { top: 16px; left: 16px; animation: float-block 3s ease-in-out infinite 0.8s; }
+    .block-6 { top: 16px; left: 32px; animation: float-block 3s ease-in-out infinite 1s; }
+    .block-7 { top: 32px; left: 0; animation: float-block 3s ease-in-out infinite 1.2s; }
+    .block-8 { top: 32px; left: 16px; animation: float-block 3s ease-in-out infinite 1.4s; }
+    .block-9 { top: 32px; left: 32px; animation: float-block 3s ease-in-out infinite 1.6s; }
+    
+    @keyframes float-block {
+      0%, 100% { transform: translateY(0); border-color: #fff; }
+      50% { transform: translateY(-4px); border-color: var(--accent-cyan); }
+    }
+    
+    nav ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    
+    nav a {
+      color: var(--primary-text);
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      position: relative;
+      padding: 0.5rem 0;
+      transition: color 0.3s ease;
+    }
+    
+    nav a:hover {
+      color: var(--accent-cyan);
+    }
+    
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--accent-cyan);
+      transition: width 0.3s ease;
+    }
+    
+    nav a:hover::after {
+      width: 100%;
+    }
+    
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 5rem 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Improved ghost logo with animation */
+    .hero-logo {
+      width: 280px;
+      margin-bottom: 2rem;
+      filter: drop-shadow(var(--ghost-glow));
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    .hero h2 {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      letter-spacing: 2px;
+      line-height: 1.2;
+      max-width: 800px;
+      text-shadow: 0 0 10px rgba(0, 230, 230, 0.3);
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    
+    .btn {
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      display: inline-block;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+    
+    .btn:hover::before {
+      left: 100%;
+    }
+    
+    .btn-primary {
+      background-color: var(--accent-cyan);
+      color: #000;
+    }
+    
+    .btn-primary:hover {
+      background-color: #00b3b3;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 230, 230, 0.3);
+    }
+    
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--primary-text);
+      border: 1px solid var(--accent-cyan);
+    }
+    
+    .btn-secondary:hover {
+      background-color: rgba(0, 230, 230, 0.1);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 230, 230, 0.1);
+    }
+    
+    .services {
+      padding: 6rem 5%;
+      background-color: var(--dark-accent);
+      position: relative;
+      z-index: 1;
+    }
+    
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      letter-spacing: 2px;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 1rem;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+    }
+    
+    .services-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .service-card {
+      background-color: rgba(17, 17, 17, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 2rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, rgba(0, 230, 230, 0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(0, 230, 230, 0.2);
+    }
+    
+    .service-card:hover::before {
+      opacity: 1;
+    }
+    
+    .service-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--accent-cyan);
+    }
+    
+    .service-card p {
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    
+    .learn-more {
+      color: var(--accent-cyan);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      transition: gap 0.3s ease;
+    }
+    
+    .learn-more:hover {
+      gap: 0.8rem;
+    }
+    
+    .projects {
+      padding: 6rem 5%;
+      background-color: var(--dark-bg);
+      position: relative;
+      z-index: 1;
+    }
+    
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    
+    .project-card {
+      background-color: rgba(17, 17, 17, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(0, 230, 230, 0.2);
+    }
+    
+    .project-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    
+    .project-info {
+      padding: 1.5rem;
+    }
+    
+    .project-info h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary-text);
+    }
+    
+    .project-info p {
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    
+    .about {
+      padding: 6rem 5%;
+      background-color: var(--dark-accent);
+      position: relative;
+      z-index: 1;
+    }
+    
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    
+    .about-image {
+      position: relative;
+      height: 400px;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+    
+    .about-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .about-text h3 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary-text);
+    }
+    
+    .about-text p {
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+    
+    .contact {
+      padding: 6rem 5%;
+      background-color: var(--dark-bg);
+      position: relative;
+      z-index: 1;
+    }
+    
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-top: 3rem;
+    }
+    
+    .contact-info-box {
+      background-color: rgba(17, 17, 17, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 2rem;
+    }
+    
+    .contact-method {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .contact-method i {
+      color: var(--accent-cyan);
+      font-size: 1.5rem;
+    }
+    
+    .contact-method div h4 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary-text);
+    }
+    
+    .contact-method div p, .contact-method div a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .contact-method div a:hover {
+      color: var(--accent-cyan);
+    }
+    
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .form-group label {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .form-control {
+      padding: 0.8rem 1rem;
+      background-color: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      color: var(--primary-text);
+      font-size: 1rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 0 3px rgba(0, 230, 230, 0.1);
+    }
+    
+    textarea.form-control {
+      min-height: 150px;
+      resize: vertical;
+    }
+    
+    .marquee-section {
+      padding: 3rem 0;
+      overflow: hidden;
+      position: relative;
+      background-color: var(--dark-bg);
+    }
+    
+    .marquee-content {
+      display: flex;
+      animation: marquee 20s linear infinite;
+    }
+    
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    
+    .tech-logo {
+      height: 40px;
+      margin: 0 2rem;
+      opacity: 0.6;
+      transition: opacity 0.3s ease;
+    }
+    
+    .tech-logo:hover {
+      opacity: 1;
+    }
+    
+    footer {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 3rem 5% 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+      z-index: 1;
+    }
+    
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    
+    .footer-logo {
+      height: 40px;
+      margin-bottom: 1rem;
+      filter: drop-shadow(var(--ghost-glow));
+    }
+    
+    .footer-about p {
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 1rem;
+    }
+    
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: var(--primary-text);
+    }
+    
+    .social-icon:hover {
+      background-color: var(--accent-cyan);
+      border-color: var(--accent-cyan);
+      color: #000;
+    }
+    
+    .footer-nav h4, .footer-contact h4 {
+      margin-bottom: 1.5rem;
+      font-size: 1.2rem;
+      color: var(--primary-text);
+    }
+    
+    .footer-nav ul {
+      list-style: none;
+    }
+    
+    .footer-nav li {
+      margin-bottom: 0.8rem;
+    }
+    
+    .footer-nav a {
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-nav a:hover {
+      color: var(--accent-cyan);
+    }
+    
+    .contact-info {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .contact-info i {
+      color: var(--accent-cyan);
+    }
+    
+    .contact-info p {
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.5;
+    }
+    
+    .footer-bottom {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      text-align: center;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.9rem;
+    }
+    
+    /* Fixed ghost SVG styling */
+    .ghost-svg {
+      max-width: 100%;
+      height: auto;
+      filter: drop-shadow(var(--ghost-glow));
+    }
+    
+    /* Bottom ghost animation */
+    .bottom-ghost {
+      position: relative;
+      overflow: visible;
+    }
+    
+    .bottom-ghost-outline {
+      stroke: var(--accent-cyan);
+      stroke-width: 1.5;
+      fill: none;
+      filter: drop-shadow(var(--ghost-glow));
+      animation: pulse 3s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+    
+    @media (max-width: 991px) {
+      .about-content, .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        padding: 1rem;
+      }
+      
+      .logo {
+        margin-bottom: 1rem;
+      }
+      
+      nav ul {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .hero h2 {
+        font-size: 2rem;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="circuit-bg"></div>
+  
+  <header>
+    <div class="logo">
+      <!-- Animated blocks next to logo -->
+      <div class="logo-blocks">
+        <div class="logo-block block-1"></div>
+        <div class="logo-block block-2"></div>
+        <div class="logo-block block-3"></div>
+        <div class="logo-block block-4"></div>
+        <div class="logo-block block-5"></div>
+        <div class="logo-block block-6"></div>
+        <div class="logo-block block-7"></div>
+        <div class="logo-block block-8"></div>
+        <div class="logo-block block-9"></div>
+      </div>
+      
+      <!-- Ghost SVG Logo -->
+      <svg class="ghost-svg" width="50" height="50" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 5C34.5 5 22 17.5 22 33v45c0 2.2 1.8 4 4 4 1.2 0 2.3-.6 3-1.5 1.4 1 3 1.5 4.7 1.5 2.4 0 4.6-1 6.1-2.7C41.3 81 43.6 82 46 82c2.8 0 5.2-1.3 6.8-3.4 1.6 2.1 4.1 3.4 6.9 3.4 2.4 0 4.7-1 6.3-2.7 1.5 1.7 3.7 2.7 6.1 2.7 1.7 0 3.3-.5 4.7-1.5.7.9 1.8 1.5 3 1.5 2.2 0 4-1.8 4-4V33C78 17.5 65.5 5 50 5z" fill="#000"/>
+        <rect x="30" y="40" width="15" height="15" stroke="#fff" stroke-width="2"/>
+        <rect x="50" y="30" width="15" height="15" stroke="#fff" stroke-width="2"/>
+        <rect x="60" y="55" width="15" height="15" stroke="#fff" stroke-width="2"/>
+        <rect x="40" y="60" width="15" height="15" stroke="#fff" stroke-width="2"/>
+        <rect x="20" y="55" width="15" height="15" stroke="#fff" stroke-width="2"/>
+        <rect x="35" y="20" width="15" height="15" stroke="#fff" stroke-width="2"/>
+        <rect x="70" y="35" width="15" height="15" stroke="#fff" stroke-width="2"/>
+        <rect x="15" y="30" width="15" height="15" stroke="#fff" stroke-width="2"/>
+      </svg>
+      <h1>The Ghost Devs</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <section class="hero" id="home">
+    <!-- Hero Ghost SVG Logo with improved animation -->
+    <svg class="hero-logo" width="280" height="280" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M100 10C69 10 44 35 44 66v90c0 4.4 3.6 8 8 8 2.4 0 4.6-1.2 6-3 2.8 2 6 3 9.4 3 4.8 0 9.2-2 12.2-5.4C82.6 162 87.2 164 92 164c5.6 0 10.4-2.6 13.6-6.8 3.2 4.2 8.2 6.8 13.8 6.8 4.8 0 9.4-2 12.6-5.4 3 3.4 7.4 5.4 12.2 5.4 3.4 0 6.6-1 9.4-3 1.4 1.8 3.6 3 6 3 4.4 0 8-3.6 8-8V66C156 35 131 10 100 10z" fill="#050505"/>
+      <rect x="60" y="80" width="30" height="30" stroke="#fff" stroke-width="3"/>
+      <rect x="100" y="60" width="30" height="30" stroke="#fff" stroke-width="3"/>
+      <rect x="120" y="110" width="30" height="30" stroke="#fff" stroke-width="3"/>
+      <rect x="80" y="120" width="30" height="30" stroke="#fff" stroke-width="3"/>
+      <rect x="40" y="110" width="30" height="30" stroke="#fff" stroke-width="3"/>
+      <rect x="70" y="40" width="30" height="30" stroke="#fff" stroke-width="3"/>
+      <rect x="140" y="70" width="30" height="30" stroke="#fff" stroke-width="3"/>
+      <rect x="30" y="60" width="30" height="30" stroke="#fff" stroke-width="3"/>
+    </svg>
+    <h2>Blockchain Solutions for the Digital Frontier</h2>
+    <p>Specializing in Kaspa blockchain development and B2B integration solutions for forward-thinking businesses.</p>
+    <div class="cta-buttons">
+      <a href="#services" class="btn btn-primary">Explore Services</a>
+      <a href="#projects" class="btn btn-secondary">View Projects</a>
+    </div>
+  </section>
+  
+  <section class="services" id="services">
+    <h2 class="section-title">Our Services</h2>
+    <div class="services-container">
+      <div class="service-card">
+        <h3>Kaspa Blockchain Development</h3>
+        <p>Leverage the power of Kaspa's high-performance blockchain technology with custom solutions designed for your specific needs.</p>
+        <a href="#contact" class="learn-more">Learn more →</a>
+      </div>
+      <div class="service-card">
+        <h3>B2B Integration</h3>
+        <p>Seamlessly connect your business systems with blockchain technology, ensuring secure and efficient data exchange.</p>
+        <a href="#contact" class="learn-more">Learn more →</a>
+      </div>
+      <div class="service-card">
+        <h3>Custom Blockchain Solutions</h3>
+        <p>From smart contracts to decentralized applications, we build tailored blockchain solutions that solve real business challenges.</p>
+        <a href="#contact" class="learn-more">Learn more →</a>
+      </div>
+      <div class="service-card">
+        <h3>Blockchain Consulting</h3>
+        <p>Navigate the complex world of blockchain technology with expert guidance from our team of specialists.</p>
+        <a href="#contact" class="learn-more">Learn more →</a>
+      </div>
+    </div>
+  </section>
+  
+  <section class="projects" id="projects">
+    <h2 class="section-title">Our Projects</h2>
+    <div class="project-grid">
+      <div class="project-card">
+        <svg class="project-img" width="350" height="200" viewBox="0 0 350 200" xmlns="http://www.w3.org/2000/svg">
+          <rect width="350" height="200" fill="#111" />
+          <circle cx="175" cy="100" r="40" fill="none" stroke="#00e6e6" stroke-width="2" />
+          <text x="175" y="105" text-anchor="middle" fill="#fff" font-family="monospace">Project 1</text>
+        </svg>
+        <div class="project-info">
+          <h3>Kaspa Payment Gateway</h3>
+          <p>A secure and efficient payment gateway built on the Kaspa blockchain, enabling businesses to accept cryptocurrency payments with ease.</p>
+          <a href="#contact" class="learn-more">Case Study →</a>
+        </div>
+      </div>
+      <div class="project-card">
+        <svg class="project-img" width="350" height="200" viewBox="0 0 350 200" xmlns="http://www.w3.org/2000/svg">
+          <rect width="350" height="200" fill="#111" />
+          <rect x="120" y="70" width="110" height="60" fill="none" stroke="#00e6e6" stroke-width="2" />
+          <text x="175" y="105" text-anchor="middle" fill="#fff" font-family="monospace">Project 2</text>
+        </svg>
+        <div class="project-info">
+          <h3>B2B Blockchain Integration</h3>
+          <p>Custom integration system connecting legacy business infrastructure with modern blockchain solutions for improved security and efficiency.</p>
+          <a href="#contact" class="learn-more">Case Study →</a>
+        </div>
+      </div>
+      <div class="project-card">
+        <svg class="project-img" width="350" height="200" viewBox="0 0 350 200" xmlns="http://www.w3.org/2000/svg">
+          <rect width="350" height="200" fill="#111" />
+          <polygon points="175,60 140,120 210,120" fill="none" stroke="#00e6e6" stroke-width="2" />
+          <text x="175" y="105" text-anchor="middle" fill="#fff" font-family="monospace">Project 3</text>
+        </svg>
+        <div class="project-info">
+          <h3>Supply Chain Tracking System</h3>
+          <p>Blockchain-based solution for real-time tracking and verification of products throughout the entire supply chain process.</p>
+          <a href="#contact" class="learn-more">Case Study →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="about" id="about">
+    <h2 class="section-title">About Us</h2>
+    <div class="about-content">
+      <div class="about-image">
+        <!-- Fixed bottom ghost SVG -->
+        <svg width="100%" height="100%" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" class="bottom-ghost">
+          <rect width="400" height="400" fill="#111" />
+          <!-- Fixed ghost outline with proper animation -->
+          <path class="bottom-ghost-outline" d="M200 50C130 50 80 100 80 170v160c0 8 6 14 14 14 4 0 8-2 10-5 5 3 10 5 16 5 8 0 16-3 22-9 4 6 10 9 16 9 10 0 19-5 24-12 5 7 15 12 24 12 8 0 16-3 22-9 5 6 14 9 22 9 6 0 11-2 16-5 2 3 6 5 10 5 8 0 14-6 14-14V170C320 100 270 50 200 50z" />
+          
+          <!-- Team Ghost Silhouettes -->
+          <path d="M120 150C100 150 80 170 80 190v80c0 5 4 10 10 10V150h30z" fill="#222" />
+          <path d="M200 150C180 150 160 170 160 190v80c0 5 4 10 10 10V150h30z" fill="#222" />
+          <path d="M280 150C260 150 240 170 240 190v80c0 5 4 10 10 10V150h30z" fill="#222" />
+          
+          <!-- Block pattern inside the ghost -->
+          <rect x="100" y="80" width="20" height="20" stroke="#00e6e6" stroke-width="1" fill="none" />
+          <rect x="130" y="90" width="20" height="20" stroke="#00e6e6" stroke-width="1" fill="none" />
+          <rect x="180" y="70" width="20" height="20" stroke="#00e6e6" stroke-width="1" fill="none" />
+          <rect x="220" y="90" width="20" height="20" stroke="#00e6e6" stroke-width="1" fill="none" />
+          <rect x="260" y="80" width="20" height="20" stroke="#00e6e6" stroke-width="1" fill="none" />
+        </svg>
+      </div>
+      <div class="about-text">
+        <h3>Pioneering Blockchain Innovation</h3>
+        <p>The Ghost Devs is a team of passionate blockchain developers specializing in Kaspa blockchain technology and B2B integration solutions. We believe in the transformative power of blockchain to create more transparent, secure, and efficient business processes.</p>
+        <p>Our team combines deep technical expertise with a practical understanding of business needs to deliver solutions that drive real value for our clients. From custom smart contracts to complex enterprise integrations, we're committed to pushing the boundaries of what's possible in the blockchain space.</p>
+        <a href="#contact" class="btn btn-primary">Get in Touch</a>
+      </div>
+    </div>
+  </section>
+  
+  <section class="contact" id="contact">
+    <h2 class="section-title">Contact Us</h2>
+    <div class="contact-grid">
+      <div class="contact-info-box">
+        <div class="contact-method">
+          <i>📧</i>
+          <div>
+            <h4>Email</h4>
+            <a href="mailto:info@ghostdevs.com">info@ghostdevs.com</a>
+          </div>
+        </div>
+        <div class="contact-method">
+          <i>📱</i>
+          <div>
+            <h4>Phone</h4>
+            <p>+1 (555) 123-4567</p>
+          </div>
+        </div>
+        <div class="contact-method">
+          <i>📍</i>
+          <div>
+            <h4>Location</h4>
+            <p>San Francisco, CA</p>
+          </div>
+        </div>
+      </div>
+      <form class="contact-form">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" class="form-control" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+      </form>
+    </div>
+  </section>
+  
+  <section class="marquee-section">
+    <div class="marquee-content">
+      <!-- Tech logos -->
+      <svg class="tech-logo" width="40" height="40" viewBox="0 0 100 100" fill="#fff">
+        <rect x="10" y="10" width="35" height="35" />
+        <rect x="55" y="10" width="35" height="35" />
+        <rect x="10" y="55" width="35" height="35" />
+        <rect x="55" y="55" width="35" height="35" />
+      </svg>
+      <svg class="tech-logo" width="40" height="40" viewBox="0 0 100 100" fill="#fff">
+        <circle cx="50" cy="50" r="40" />
+      </svg>
+      <svg class="tech-logo" width="40" height="40" viewBox="0 0 100 100" fill="#fff">
+        <polygon points="50,10 90,90 10,90" />
+      </svg>
+      <svg class="tech-logo" width="40" height="40" viewBox="0 0 100 100" fill="#fff">
+        <rect x="25" y="25" width="50" height="50" transform="rotate(45, 50, 50)" />
+      </svg>
+      <svg class="tech-logo" width="40" height="40" viewBox="0 0 100 100" fill="#fff">
+        <path d="M10,50 Q50,10 90,50 Q50,90 10,50" />
+      </svg>
+    </div>
+  </section>
+  
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-about">
+        <svg class="footer-logo" width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 5C34.5 5 22 17.5 22 33v45c0 2.2 1.8 4 4 4 1.2 0 2.3-.6 3-1.5 1.4 1 3 1.5 4.7 1.5 2.4 0 4.6-1 6.1-2.7C41.3 81 43.6 82 46 82c2.8 0 5.2-1.3 6.8-3.4 1.6 2.1 4.1 3.4 6.9 3.4 2.4 0 4.7-1 6.3-2.7 1.5 1.7 3.7 2.7 6.1 2.7 1.7 0 3.3-.5 4.7-1.5.7.9 1.8 1.5 3 1.5 2.2 0 4-1.8 4-4V33C78 17.5 65.5 5 50 5z" fill="#050505" stroke="#00e6e6" stroke-width="1.5"/>
+          <rect x="30" y="40" width="15" height="15" stroke="#fff" stroke-width="1.5"/>
+          <rect x="50" y="30" width="15" height="15" stroke="#fff" stroke-width="1.5"/>
+          <rect x="60" y="55" width="15" height="15" stroke="#fff" stroke-width="1.5"/>
+          <rect x="40" y="60" width="15" height="15" stroke="#fff" stroke-width="1.5"/>
+          <rect x="20" y="55" width="15" height="15" stroke="#fff" stroke-width="1.5"/>
+        </svg>
+        <p>The Ghost Devs specializes in blockchain development and B2B integration solutions, helping businesses leverage the power of distributed ledger technology.</p>
+        <div class="social-links">
+          <a href="#" class="social-icon">T</a>
+          <a href="#" class="social-icon">L</a>
+          <a href="#" class="social-icon">G</a>
+          <a href="#" class="social-icon">D</a>
+        </div>
+      </div>
+      <div class="footer-nav">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <div class="contact-info">
+          <i>📧</i>
+          <p>info@ghostdevs.com</p>
+        </div>
+        <div class="contact-info">
+          <i>📱</i>
+          <p>+1 (555) 123-4567</p>
+        </div>
+        <div class="contact-info">
+          <i>📍</i>
+          <p>San Francisco, CA</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 The Ghost Devs. All rights reserved.</p>
+    </div>
+  </footer>
+  
+  <script>
+    // Animation for blocks
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add hover effect to service cards
+      const serviceCards = document.querySelectorAll('.service-card');
+      serviceCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-10px)';
+          this.style.boxShadow = '0 10px 30px rgba(0, 230, 230, 0.2)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0)';
+          this.style.boxShadow = 'none';
+        });
+      });
+    });
+  </script>
+</body>
+</html>
