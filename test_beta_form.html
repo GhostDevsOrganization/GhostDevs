@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GhostDevs Beta Form Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(17, 24, 39, 0.95);
+            border: 2px solid #00c8ff;
+            border-radius: 1rem;
+            padding: 2rem;
+        }
+
+        .title {
+            font-size: 2rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, #ffffff, #00c8ff, #ffffff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #00c8ff;
+            font-weight: 600;
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #333;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #00c8ff;
+            box-shadow: 0 0 20px rgba(0, 200, 255, 0.3);
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #00c8ff;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 1.2rem 2rem;
+            background: linear-gradient(45deg, #00c8ff, #0080ff);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 1rem;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 200, 255, 0.4);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .success-message {
+            background: rgba(0, 255, 100, 0.1);
+            border: 2px solid #00ff64;
+            color: #00ff64;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 1rem;
+            font-weight: 600;
+            display: none;
+        }
+
+        .error-message {
+            color: #ff0064;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, .3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .admin-info {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 2rem;
+            color: #ffc107;
+            font-size: 0.9rem;
+        }
+
+        .admin-info strong {
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="title">🚀 Join GhostDevs Beta</h1>
+
+        <form id="betaForm">
+            <div class="form-group">
+                <label for="name" class="form-label">Full Name *</label>
+                <input type="text" id="name" name="name" class="form-input" placeholder="Enter your full name" required>
+                <div id="nameError" class="error-message"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="form-label">Email Address *</label>
+                <input type="email" id="email" name="email" class="form-input" placeholder="your.email@example.com"
+                    required>
+                <div id="emailError" class="error-message"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">What interests you most? (Select all that apply)</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="interests" value="Token Swapping" id="interest1">
+                        <label for="interest1">Token Swapping</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="interests" value="Cross-Chain Trading" id="interest2">
+                        <label for="interest2">Cross-Chain Trading</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="interests" value="Advanced Analytics" id="interest3">
+                        <label for="interest3">Advanced Analytics</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="interests" value="Portfolio Management" id="interest4">
+                        <label for="interest4">Portfolio Management</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="interests" value="DeFi Integration" id="interest5">
+                        <label for="interest5">DeFi Integration</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="interests" value="Mobile Trading" id="interest6">
+                        <label for="interest6">Mobile Trading</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="referralSource" class="form-label">How did you hear about us?</label>
+                <select id="referralSource" name="referralSource" class="form-select">
+                    <option value="">Select an option</option>
+                    <option value="Social Media">Social Media</option>
+                    <option value="Search Engine">Search Engine</option>
+                    <option value="Friend/Colleague">Friend/Colleague</option>
+                    <option value="Crypto Community">Crypto Community</option>
+                    <option value="News Article">News Article</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="comments" class="form-label">Additional Comments</label>
+                <textarea id="comments" name="comments" rows="4" class="form-textarea"
+                    placeholder="Tell us about your trading experience or what features you're most excited about..."></textarea>
+            </div>
+
+            <button type="submit" id="submitBtn" class="submit-button">
+                <span id="submitText">Join Beta Program</span>
+            </button>
+
+            <div id="submitError" class="error-message"></div>
+        </form>
+
+        <div id="successMessage" class="success-message">
+            <h3>🎉 Welcome to the Future!</h3>
+            <p>Thank you for joining our beta program. We'll be in touch soon with exclusive access and updates.</p>
+            <p><strong>Submission ID:</strong> <span id="submissionId"></span></p>
+        </div>
+
+        <div class="admin-info">
+            <strong>📊 Admin Dashboard:</strong> Open <a href="admin_dashboard.html"
+                style="color: #00c8ff;">admin_dashboard.html</a> to view all submissions.<br>
+            <strong>💡 Console Commands:</strong> Press F12 and type <code>viewBetaSubmissions()</code> to see all
+            submissions or <code>getBetaSubmissionCount()</code> for the count.
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('betaForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            const successMessage = document.getElementById('successMessage');
+            const submitError = document.getElementById('submitError');
+
+            // Clear previous errors
+            document.getElementById('nameError').textContent = '';
+            document.getElementById('emailError').textContent = '';
+            submitError.textContent = '';
+
+            // Get form data
+            const formData = new FormData(e.target);
+            const data = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                interests: formData.getAll('interests'),
+                referralSource: formData.get('referralSource'),
+                comments: formData.get('comments'),
+                timestamp: new Date().toISOString(),
+                id: Date.now().toString()
+            };
+
+            // Validate
+            let isValid = true;
+            if (!data.name.trim()) {
+                document.getElementById('nameError').textContent = 'Name is required';
+                isValid = false;
+            }
+            if (!data.email.trim()) {
+                document.getElementById('emailError').textContent = 'Email is required';
+                isValid = false;
+            } else if (!/\S+@\S+\.\S+/.test(data.email)) {
+                document.getElementById('emailError').textContent = 'Please enter a valid email address';
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            // Show loading state
+            submitBtn.disabled = true;
+            submitText.innerHTML = '<span class="loading"></span>Joining Beta...';
+
+            try {
+                // Simulate processing delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                // Save to localStorage
+                const existingSubmissions = JSON.parse(localStorage.getItem('betaSubmissions') || '[]');
+                existingSubmissions.push(data);
+                localStorage.setItem('betaSubmissions', JSON.stringify(existingSubmissions));
+
+                // Log for admin visibility
+                console.log('🎉 NEW BETA SUBMISSION RECEIVED!');
+                console.log('Submission Details:', data);
+                console.log('Total Submissions:', existingSubmissions.length);
+
+                // Show browser notification if permission granted
+                if (Notification.permission === 'granted') {
+                    new Notification('GhostDevs Beta Submission', {
+                        body: `New beta signup from ${data.name}`,
+                        icon: '/ghost_logo_transparent-removebg-preview.png'
+                    });
+                } else if (Notification.permission === 'default') {
+                    Notification.requestPermission().then(permission => {
+                        if (permission === 'granted') {
+                            new Notification('GhostDevs Beta Submission', {
+                                body: `New beta signup from ${data.name}`,
+                                icon: '/ghost_logo_transparent-removebg-preview.png'
+                            });
+                        }
+                    });
+                }
+
+                // Show success message
+                document.getElementById('submissionId').textContent = data.id;
+                successMessage.style.display = 'block';
+                e.target.style.display = 'none';
+
+                // Alert for immediate confirmation
+                alert(`✅ SUCCESS! Beta submission received for ${data.name} (${data.email}). Check the admin dashboard or console for details.`);
+
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                submitError.textContent = 'An unexpected error occurred. Please try again.';
+            } finally {
+                submitBtn.disabled = false;
+                submitText.textContent = 'Join Beta Program';
+            }
+        });
+
+        // Add global functions for console access
+        window.viewBetaSubmissions = () => {
+            const submissions = JSON.parse(localStorage.getItem('betaSubmissions') || '[]');
+            console.log('📊 BETA SUBMISSIONS DASHBOARD');
+            console.log('Total Submissions:', submissions.length);
+            console.table(submissions);
+            return submissions;
+        };
+
+        window.getBetaSubmissionCount = () => {
+            const submissions = JSON.parse(localStorage.getItem('betaSubmissions') || '[]');
+            return submissions.length;
+        };
+
+        window.clearAllSubmissions = () => {
+            if (confirm('Are you sure you want to clear all beta submissions? This cannot be undone.')) {
+                localStorage.removeItem('betaSubmissions');
+                console.log('All beta submissions cleared');
+                location.reload();
+            }
+        };
+    </script>
+</body>
+
+</html>

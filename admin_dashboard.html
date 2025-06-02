@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GhostDevs - Beta Submissions Dashboard</title>
+    <script>
+        // Basic password protection (client-side only, not secure)
+        const correctPassword = 'letmein'; // Change this to your desired password
+        const userPassword = prompt('Enter admin dashboard password:');
+        if (userPassword !== correctPassword) {
+            document.write('<h1 style="color:red; text-align:center; margin-top:2rem;">Access Denied</h1>');
+            throw new Error('Access denied');
+        }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .dashboard-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ffffff, #00c8ff, #ffffff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(0, 200, 255, 0.1);
+            border: 2px solid #00c8ff;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #00c8ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #888;
+        }
+
+        .submissions-container {
+            background: rgba(17, 24, 39, 0.95);
+            border: 1px solid rgba(20, 184, 166, 0.3);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .submissions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .submissions-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00c8ff;
+        }
+
+        .refresh-btn {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(45deg, #00c8ff, #0080ff);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 200, 255, 0.4);
+        }
+
+        .submission-card {
+            background: rgba(31, 41, 55, 0.5);
+            border: 1px solid rgba(13, 148, 136, 0.5);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .submission-card:hover {
+            border-color: #2dd4bf;
+            transform: translateY(-2px);
+        }
+
+        .submission-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .submission-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .submission-email {
+            color: #99f6e4;
+            font-size: 0.9rem;
+        }
+
+        .submission-timestamp {
+            color: #9ca3af;
+            font-size: 0.8rem;
+            margin-left: auto;
+        }
+
+        .submission-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .detail-group {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .detail-label {
+            font-size: 0.8rem;
+            color: #99f6e4;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .detail-value {
+            color: #d1d5db;
+            font-size: 0.9rem;
+        }
+
+        .interests-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .interest-tag {
+            background: linear-gradient(45deg, #2dd4bf, #a855f7);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .no-submissions {
+            text-align: center;
+            color: #9ca3af;
+            font-style: italic;
+            padding: 3rem;
+        }
+
+        .export-btn {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(45deg, #10b981, #a855f7);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 1rem;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+        }
+
+        .console-tip {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 2rem;
+            color: #ffc107;
+        }
+
+        .console-tip strong {
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-header">
+        <h1 class="dashboard-title">Beta Submissions Dashboard</h1>
+        <p style="color: #888;">Monitor and manage your GhostDevs beta program signups</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number" id="total-submissions">0</div>
+            <div class="stat-label">Total Submissions</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="today-submissions">0</div>
+            <div class="stat-label">Today's Submissions</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="this-week-submissions">0</div>
+            <div class="stat-label">This Week</div>
+        </div>
+    </div>
+
+    <div class="submissions-container">
+        <div class="submissions-header">
+            <h2 class="submissions-title">Recent Submissions</h2>
+            <div>
+                <button class="refresh-btn" onclick="refreshDashboard()">🔄 Refresh</button>
+                <button class="export-btn" onclick="exportSubmissions()">📊 Export CSV</button>
+            </div>
+        </div>
+        <div id="submissions-list">
+            <!-- Submissions will be loaded here -->
+        </div>
+    </div>
+
+    <div class="console-tip">
+        <strong>💡 Pro Tip:</strong> Open your browser's developer console (F12) and type
+        <code>viewBetaSubmissions()</code> to see a detailed table view of all submissions, or
+        <code>getBetaSubmissionCount()</code> to get the current count.
+    </div>
+
+    <script>
+        function refreshDashboard() {
+            loadSubmissions();
+            updateStats();
+        }
+
+        function loadSubmissions() {
+            const submissions = JSON.parse(localStorage.getItem('betaSubmissions') || '[]');
+            const submissionsList = document.getElementById('submissions-list');
+
+            if (submissions.length === 0) {
+                submissionsList.innerHTML = '<div class="no-submissions">No beta submissions yet. Share your beta form to start collecting signups!</div>';
+                return;
+            }
+
+            // Sort by timestamp (newest first)
+            submissions.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+            submissionsList.innerHTML = submissions.map(submission => `
+                <div class="submission-card">
+                    <div class="submission-header">
+                        <div>
+                            <div class="submission-name">${submission.name}</div>
+                            <div class="submission-email">${submission.email}</div>
+                        </div>
+                        <div class="submission-timestamp">${formatTimestamp(submission.timestamp)}</div>
+                    </div>
+                    <div class="submission-details">
+                        <div class="detail-group">
+                            <div class="detail-label">Interests</div>
+                            <div class="detail-value">
+                                ${submission.interests.length > 0 ?
+                    `<div class="interests-list">
+                                        ${submission.interests.map(interest => `<span class="interest-tag">${interest}</span>`).join('')}
+                                    </div>` :
+                    'None specified'
+                }
+                            </div>
+                        </div>
+                        <div class="detail-group">
+                            <div class="detail-label">Referral Source</div>
+                            <div class="detail-value">${submission.referralSource || 'Not specified'}</div>
+                        </div>
+                    </div>
+                    ${submission.comments ? `
+                        <div class="detail-group" style="margin-top: 1rem; grid-column: 1 / -1;">
+                            <div class="detail-label">Comments</div>
+                            <div class="detail-value">${submission.comments}</div>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        function updateStats() {
+            const submissions = JSON.parse(localStorage.getItem('betaSubmissions') || '[]');
+            const now = new Date();
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+            const todaySubmissions = submissions.filter(s => new Date(s.timestamp) >= today).length;
+            const weekSubmissions = submissions.filter(s => new Date(s.timestamp) >= weekAgo).length;
+
+            document.getElementById('total-submissions').textContent = submissions.length;
+            document.getElementById('today-submissions').textContent = todaySubmissions;
+            document.getElementById('this-week-submissions').textContent = weekSubmissions;
+        }
+
+        function formatTimestamp(timestamp) {
+            const date = new Date(timestamp);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins}m ago`;
+            if (diffHours < 24) return `${diffHours}h ago`;
+            if (diffDays < 7) return `${diffDays}d ago`;
+
+            return date.toLocaleDateString();
+        }
+
+        function exportSubmissions() {
+            const submissions = JSON.parse(localStorage.getItem('betaSubmissions') || '[]');
+
+            if (submissions.length === 0) {
+                alert('No submissions to export');
+                return;
+            }
+
+            // Create CSV content
+            const headers = ['Name', 'Email', 'Interests', 'Referral Source', 'Comments', 'Timestamp'];
+            const csvContent = [
+                headers.join(','),
+                ...submissions.map(s => [
+                    `"${s.name}"`,
+                    `"${s.email}"`,
+                    `"${s.interests.join('; ')}"`,
+                    `"${s.referralSource || ''}"`,
+                    `"${s.comments || ''}"`,
+                    `"${s.timestamp}"`
+                ].join(','))
+            ].join('\n');
+
+            // Download CSV
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ghostdevs-beta-submissions-${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Auto-refresh every 30 seconds
+        setInterval(refreshDashboard, 30000);
+
+        // Initial load
+        refreshDashboard();
+
+        // Add global functions for console access
+        window.viewBetaSubmissions = () => {
+            const submissions = JSON.parse(localStorage.getItem('betaSubmissions') || '[]');
+            console.log('📊 BETA SUBMISSIONS DASHBOARD');
+            console.log('Total Submissions:', submissions.length);
+            console.table(submissions);
+            return submissions;
+        };
+
+        window.getBetaSubmissionCount = () => {
+            const submissions = JSON.parse(localStorage.getItem('betaSubmissions') || '[]');
+            return submissions.length;
+        };
+
+        window.clearAllSubmissions = () => {
+            if (confirm('Are you sure you want to clear all beta submissions? This cannot be undone.')) {
+                localStorage.removeItem('betaSubmissions');
+                refreshDashboard();
+                console.log('All beta submissions cleared');
+            }
+        };
+    </script>
+</body>
+
+</html>

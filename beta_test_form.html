@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GhostDevs Beta Test Form</title>
+    <link rel="stylesheet" href="assets/css/beta_form.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- You might need to include Lucide Icons or similar for the icons -->
+    <!-- For now, we'll omit the icons or use simple text placeholders -->
+</head>
+
+<body class="bg-gray-900 text-white font-inter">
+    <div class="form-container-wrapper">
+        <div class="form-container">
+            <button id="close-form-button" class="close-button">
+                <!-- X icon placeholder -->
+                &times;
+            </button>
+
+            <div id="form-success-state" class="success-state hidden">
+                <div class="success-icon-wrapper">
+                    <!-- CheckCircle icon placeholder -->
+                    &#10003;
+                </div>
+                <h2 class="success-title">Welcome to the Future!</h2>
+                <p class="success-message">Thank you for joining our beta program.</p>
+                <p class="success-sub-message">We'll be in touch soon with exclusive access and updates.</p>
+                <div class="success-divider"></div>
+            </div>
+
+            <div id="form-main-content">
+                <div class="form-header">
+                    <h2 class="form-title">
+                        Join <span class="gradient-text">Beta</span>
+                    </h2>
+                    <p class="form-subtitle">Be among the first to experience the future of smart contracts on kaspa</p>
+                </div>
+
+                <form id="beta-form" class="space-y-6">
+                    <!-- Name Field -->
+                    <div>
+                        <label for="name" class="form-label">
+                            <!-- User icon placeholder -->
+                            Full Name *
+                        </label>
+                        <input type="text" name="name" id="name" class="form-input" placeholder="Enter your full name"
+                            required />
+                        <p id="name-error" class="error-message"></p>
+                    </div>
+
+                    <!-- Email Field -->
+                    <div>
+                        <label for="email" class="form-label">
+                            <!-- Mail icon placeholder -->
+                            Email Address *
+                        </label>
+                        <input type="email" name="email" id="email" class="form-input"
+                            placeholder="your.email@example.com" required />
+                        <p id="email-error" class="error-message"></p>
+                    </div>
+
+                    <!-- Interests -->
+                    <div>
+                        <label class="form-label">
+                            What interests you most? (Select all that apply)
+                        </label>
+                        <div class="grid-cols-2 gap-3">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="interests" value="Token Swapping" class="sr-only" />
+                                <div class="checkbox-custom"></div>
+                                <span class="checkbox-text">Token Swapping</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="interests" value="Cross-Chain Trading" class="sr-only" />
+                                <div class="checkbox-custom"></div>
+                                <span class="checkbox-text">Cross-Chain Trading</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="interests" value="Advanced Analytics" class="sr-only" />
+                                <div class="checkbox-custom"></div>
+                                <span class="checkbox-text">Advanced Analytics</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="interests" value="Portfolio Management" class="sr-only" />
+                                <div class="checkbox-custom"></div>
+                                <span class="checkbox-text">Portfolio Management</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="interests" value="DeFi Integration" class="sr-only" />
+                                <div class="checkbox-custom"></div>
+                                <span class="checkbox-text">DeFi Integration</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="interests" value="Mobile Trading" class="sr-only" />
+                                <div class="checkbox-custom"></div>
+                                <span class="checkbox-text">Mobile Trading</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="interests" value="Research Tools" class="sr-only" />
+                                <div class="checkbox-custom"></div>
+                                <span class="checkbox-text">Research Tools</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="interests" value="Community Features" class="sr-only" />
+                                <div class="checkbox-custom"></div>
+                                <span class="checkbox-text">Community Features</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Referral Source -->
+                    <div>
+                        <label for="referralSource" class="form-label">
+                            How did you hear about us?
+                        </label>
+                        <select name="referralSource" id="referralSource" class="form-select">
+                            <option value="">Select an option</option>
+                            <option value="Social Media">Social Media</option>
+                            <option value="Search Engine">Search Engine</option>
+                            <option value="Friend/Colleague">Friend/Colleague</option>
+                            <option value="Crypto Community">Crypto Community</option>
+                            <option value="News Article">News Article</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <!-- Comments -->
+                    <div>
+                        <label for="comments" class="form-label">
+                            <!-- MessageSquare icon placeholder -->
+                            Additional Comments
+                        </label>
+                        <textarea name="comments" id="comments" rows="4" class="form-textarea"
+                            placeholder="Tell us about your trading experience or what features you're most excited about..."></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="submit-button" class="submit-button">
+                        <span id="submit-button-text">Join Beta Program</span>
+                        <div id="loading-spinner" class="loading-spinner hidden"></div>
+                    </button>
+
+                    <p id="submit-error" class="error-message text-center"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/beta_form_standalone.js"></script>
+</body>
+
+</html>
