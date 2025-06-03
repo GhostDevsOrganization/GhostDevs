@@ -535,10 +535,7 @@
         <h3 class="qr-title">Scan to get to kasportal.com</h3>
         <p class="qr-description">Scan to open kasportal.com</p>
         <div class="qr-code-wrapper">
-          <picture>
-            <source srcset="assets/images/kaspa-qr.svg" type="image/svg+xml">
-            <img src="assets/images/kaspa-qr.png" alt="Kaspa QR Code" class="qr-code">
-          </picture>
+          <img src="assets/images/kaspa-qr.svg" alt="Kaspa QR Code" class="qr-code">
         </div>
       </div>
     </div>
@@ -605,26 +602,26 @@
         }
       });
       // Close with Escape key
-      // Close with Escape keyr('keydown', function (e) {
-      document.addEventListener('keydown', function (e) {st.contains('show')) {
+      document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && betaFormOverlay.classList.contains('show')) {
           closeBetaForm();
         }
       });
-      // Listen for messages from the iframe (when form is submitted successfully or closed)
+
       // Listen for messages from the iframe (when form is submitted successfully or closed)
       window.addEventListener('message', function (e) {
-        if (e.data === 'beta-form-success') { submission
+        if (e.data === 'beta-form-success') {
           // Close the modal after successful submission
           setTimeout(() => {
-            closeBetaForm();3 seconds to show success message
+            closeBetaForm();
           }, 3000); // Wait 3 seconds to show success message
-        } else if (e.data === 'beta-form-close') {e button is clicked
+        } else if (e.data === 'beta-form-close') {
           // Close the modal immediately when close button is clicked
           closeBetaForm();
         }
       });
-    });ipt>
+    });
   </script>
 </body>
+
 </html>
